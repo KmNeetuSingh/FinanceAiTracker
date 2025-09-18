@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { transactionsAPI } from '../services/api';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
   PieChart,
   Pie,
@@ -42,7 +42,7 @@ const Reports = () => {
 
   const handleExport = () => {
     if (!transactions || transactions.length === 0) return;
-    const headers = ['date','description','category','amount','type'];
+    const headers = ['date', 'description', 'category', 'amount', 'type'];
     const rows = transactions.map(t => [
       new Date(t.date).toISOString(),
       (t.description || '').replace(/\n|\r/g, ' '),
@@ -67,7 +67,7 @@ const Reports = () => {
 
   const getCategoryData = () => {
     const categoryMap = {};
-    
+
     transactions.forEach(transaction => {
       if (transaction.type === 'expense') {
         categoryMap[transaction.category] = (categoryMap[transaction.category] || 0) + transaction.amount;
@@ -82,17 +82,17 @@ const Reports = () => {
 
   const getMonthlyData = () => {
     const monthlyData = {};
-    
+
     transactions.forEach(transaction => {
-      const month = new Date(transaction.date).toLocaleDateString('en-US', { 
-        month: 'short', 
-        year: 'numeric' 
+      const month = new Date(transaction.date).toLocaleDateString('en-US', {
+        month: 'short',
+        year: 'numeric'
       });
-      
+
       if (!monthlyData[month]) {
         monthlyData[month] = { income: 0, expenses: 0, month };
       }
-      
+
       if (transaction.type === 'income') {
         monthlyData[month].income += transaction.amount;
       } else {
@@ -120,23 +120,26 @@ const Reports = () => {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Financial Reports</h1>
-        
+
         <div className="flex items-center space-x-4 mt-4 sm:mt-0">
           <div className="flex items-center">
-            <Filter className="h-4 w-4 text-gray-400 mr-2" />
+            <Filter className="h-4 w-4 text-black-400 mr-2" />
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
-              className="px-3 py-2 border border-black-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              // className="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="form-select bg-gray-700 text-white"
             >
-              <option value="week">This Week</option>
-              <option value="month">This Month</option>
-              <option value="quarter">This Quarter</option>
-              <option value="year">This Year</option>
-              <option value="all">All Time</option>
+              <option className="bg-gray-700 text-white" value="week">This Week</option>
+              <option className="bg-gray-700 text-white" value="month">This Month</option>
+              <option className="bg-gray-700 text-white" value="quarter">This Quarter</option>
+              <option className="bg-gray-700 text-white" value="year">This Year</option>
+              <option className="bg-gray-700 text-white" value="all">All Time</option>
             </select>
+
+
           </div>
-          
+
           <button className="btn btn-secondary flex items-center" onClick={handleExport} title="Export visible data to CSV">
             <Download className="h-4 w-4 mr-2" />
             Export
@@ -198,17 +201,17 @@ const Reports = () => {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip formatter={(value) => [`₹${value.toLocaleString()}`, 'Amount']} />
-              <Line 
-                type="monotone" 
-                dataKey="income" 
-                stroke="#10b981" 
+              <Line
+                type="monotone"
+                dataKey="income"
+                stroke="#10b981"
                 strokeWidth={2}
                 name="Income"
               />
-              <Line 
-                type="monotone" 
-                dataKey="expenses" 
-                stroke="#ef4444" 
+              <Line
+                type="monotone"
+                dataKey="expenses"
+                stroke="#ef4444"
                 strokeWidth={2}
                 name="Expenses"
               />
