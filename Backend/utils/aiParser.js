@@ -1,11 +1,9 @@
-// utils/aiParser.js
 const OpenAI = require("openai");
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Function to validate and fix date format
 function validateAndFixDate(dateString) {
   if (!dateString) {
     return new Date().toISOString().split("T")[0]; // Return current date if no date provided
