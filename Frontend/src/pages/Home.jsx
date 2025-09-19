@@ -26,9 +26,9 @@ const Home = () => {
                 I already have an account
               </Link>
             </div>
-            <div className="mt-6 text-xs text-slate-400">
+            {/* <div className="mt-6 text-xs text-slate-400">
               Video auto-plays muted per browser policy. Click to unmute if needed.
-            </div>
+            </div> */}
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-4 rounded-lg bg-white/5 ring-1 ring-white/10">
                 <p className="text-sm font-medium text-white">Smart Categorization</p>
