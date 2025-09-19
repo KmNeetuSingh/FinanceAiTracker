@@ -106,7 +106,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">Dashboard</h1>
+      <h1 className="text-2xl font-bold text-white-900 mb-8">Dashboard</h1>
 
       {dashboardData && (
         <>
@@ -116,16 +116,16 @@ const Dashboard = () => {
             <ExpenseChart data={dashboardData.categoryBreakdown} />
 
             <div className="card">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Transactions</h3>
+              <h3 className="text-lg font-semibold text-white-900 mb-4">Recent Transactions</h3>
               <div className="space-y-4">
                 {transactions.slice(0, 5).map((transaction) => (
                   <div
                     key={transaction._id}
-                    className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0"
+                    className="flex items-center justify-between py-2 border-b border-white-100 last:border-b-0"
                   >
                     <div>
-                      <p className="font-medium text-gray-900">{transaction.description}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-white-900">{transaction.description}</p>
+                      <p className="text-sm text-white-500">
                         {new Date(transaction.date).toLocaleDateString()} •{" "}
                         <span
                           className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ml-2 ${

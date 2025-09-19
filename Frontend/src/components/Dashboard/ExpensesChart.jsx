@@ -18,7 +18,7 @@ const ExpenseChart = ({ data }) => {
 
   return (
     <div className="card">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Expense Breakdown</h3>
+      <h3 className="text-lg font-semibold text-white-900 mb-4">Expense Breakdown</h3>
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>

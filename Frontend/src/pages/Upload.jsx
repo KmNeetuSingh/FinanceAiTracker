@@ -17,7 +17,7 @@ const Upload = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Upload Bank Statement</h1>
+        <h1 className="text-2xl font-bold text-white-900">Upload Bank Statement</h1>
         {uploadResult && (
           <button
             onClick={handleProcessNew}
@@ -32,10 +32,10 @@ const Upload = () => {
       {!uploadResult ? (
         <div className="max-w-4xl mx-auto">
           <div className="card">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-lg font-semibold text-white-900 mb-4">
               Upload your bank statement
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-white-600 mb-6">
               Upload your bank statement in CSV, TXT, or PDF format. Our AI will automatically
               categorize and process your transactions.
             </p>

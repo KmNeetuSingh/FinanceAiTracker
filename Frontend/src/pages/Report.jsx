@@ -119,7 +119,7 @@ const Reports = () => {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Financial Reports</h1>
+        <h1 className="text-2xl font-bold text-white-900">Financial Reports</h1>
 
         <div className="flex items-center space-x-4 mt-4 sm:mt-0">
           <div className="flex items-center">
@@ -150,7 +150,7 @@ const Reports = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Expense Breakdown */}
         <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Expense by Category</h3>
+          <h3 className="text-lg font-semibold text-white-900 mb-4">Expense by Category</h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -175,7 +175,7 @@ const Reports = () => {
 
         {/* Monthly Trends */}
         <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Income vs Expenses</h3>
+          <h3 className="text-lg font-semibold text-white-900 mb-4">Income vs Expenses</h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={monthlyData}>
@@ -193,7 +193,7 @@ const Reports = () => {
 
       {/* Monthly Trend Line Chart */}
       <div className="card mb-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Monthly Cash Flow</h3>
+        <h3 className="text-lg font-semibold text-white-900 mb-4">Monthly Cash Flow</h3>
         <div className="h-96">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={monthlyData}>
@@ -222,7 +222,7 @@ const Reports = () => {
 
       {/* Category Bar Chart */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Expense Categories</h3>
+        <h3 className="text-lg font-semibold text-white-900 mb-4">Expense Categories</h3>
         <div className="h-96">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart

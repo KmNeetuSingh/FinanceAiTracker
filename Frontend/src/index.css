@@ -160,7 +160,7 @@
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
     border: 1px solid #1f2937; /* gray-800 */
     padding: 1.5rem;
-    color: #e5e7eb;
+    color: #fefeff;
   }
 
   /* ✅ Table styles updated to use black text */
@@ -177,10 +177,10 @@
     text-align: left;
     font-size: 0.75rem;
     font-weight: 500;
-    color: black !important; /* Force black text */
+    color: rgb(255, 254, 254) !important; /* Force black text */
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    background-color: #f9fafb; /* light gray header bg */
+    background-color: #192e44; /* light gray header bg */
   }
 
   table td {
@@ -190,13 +190,13 @@
     padding-bottom: 1rem;
     white-space: nowrap;
     font-size: 0.875rem;
-    color: black !important; /* Force black text */
-    background-color: white; /* row background */
+    color: rgb(253, 251, 251) !important; /* Force black text */
+    background-color: #0f172a; /* row background */
   }
 
   /* Row hover */
   table tr:hover td {
-    background-color: #f3f4f6;
+    background-color: #091222;
   }
 
   /* Utility classes */

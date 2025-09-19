@@ -18,7 +18,7 @@ const Settings = () => {
   const tabs = [
     { id: 'profile', name: 'Profile', icon: User },
     { id: 'notifications', name: 'Notifications', icon: Bell },
-    { id: 'security', name: 'Security', icon: Shield },
+    // { id: 'security', name: 'Security', icon: Shield },
     { id: 'billing', name: 'Billing', icon: CreditCard },
   ];
 
@@ -49,7 +49,7 @@ const Settings = () => {
         return (
           <form onSubmit={handleSaveProfile} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white-700 mb-2">
                 Full Name
               </label>
               <input
@@ -62,7 +62,7 @@ const Settings = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white-700 mb-2">
                 Email Address
               </label>
               <input
@@ -92,63 +92,32 @@ const Settings = () => {
       case 'notifications':
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-medium text-gray-900">Notification Preferences</h3>
+            <h3 className="text-lg font-medium text-white-900">Notification Preferences</h3>
             
             <div className="space-y-4">
               <label className="flex items-center">
-                <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" defaultChecked />
-                <span className="ml-2 text-sm text-gray-700">Email notifications</span>
+                <input type="checkbox" className="rounded border-white-300 text-blue-600 focus:ring-blue-500" defaultChecked />
+                <span className="ml-2 text-sm text-white-700">Email notifications</span>
               </label>
               
               <label className="flex items-center">
-                <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" defaultChecked />
-                <span className="ml-2 text-sm text-gray-700">Monthly reports</span>
+                <input type="checkbox" className="rounded border-white-300 text-blue-600 focus:ring-blue-500" defaultChecked />
+                <span className="ml-2 text-sm text-white-700">Monthly reports</span>
               </label>
               
               <label className="flex items-center">
-                <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                <span className="ml-2 text-sm text-gray-700">Budget alerts</span>
+                <input type="checkbox" className="rounded border-white-300 text-blue-600 focus:ring-blue-500" />
+                <span className="ml-2 text-sm text-white-700">Budget alerts</span>
               </label>
             </div>
           </div>
         );
-      
-      case 'security':
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-medium text-gray-900">Security Settings</h3>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Current Password
-                </label>
-                <input type="password" className="form-input" />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  New Password
-                </label>
-                <input type="password" className="form-input" />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Confirm New Password
-                </label>
-                <input type="password" className="form-input" />
-              </div>
-              
-              <button className="btn btn-primary">Update Password</button>
-            </div>
-          </div>
-        );
+    
       
       case 'billing':
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-medium text-gray-900">Billing Information</h3>
+            <h3 className="text-lg font-medium text-white-900">Billing Information</h3>
             
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-blue-800">
@@ -158,9 +127,9 @@ const Settings = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="card text-center">
-                <h4 className="font-semibold text-gray-900 mb-2">Free Plan</h4>
-                <p className="text-2xl font-bold text-gray-900 mb-4">₹0</p>
-                <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                <h4 className="font-semibold text-white-900 mb-2">Free Plan</h4>
+                <p className="text-2xl font-bold text-white-900 mb-4">₹0</p>
+                <ul className="text-sm text-white-600 space-y-2 mb-4">
                   <li>✓ 5 statement uploads/month</li>
                   <li>✓ Basic categorization</li>
                   <li>✓ 30 days history</li>
@@ -169,9 +138,9 @@ const Settings = () => {
               </div>
               
               <div className="card text-center border-2 border-blue-500">
-                <h4 className="font-semibold text-gray-900 mb-2">Pro Plan</h4>
-                <p className="text-2xl font-bold text-gray-900 mb-4">₹499<span className="text-sm font-normal">/month</span></p>
-                <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                <h4 className="font-semibold text-white-900 mb-2">Pro Plan</h4>
+                <p className="text-2xl font-bold text-white-900 mb-4">₹499<span className="text-sm font-normal">/month</span></p>
+                <ul className="text-sm text-white-600 space-y-2 mb-4">
                   <li>✓ Unlimited uploads</li>
                   <li>✓ AI-powered categorization</li>
                   <li>✓ 1 year history</li>
@@ -181,9 +150,9 @@ const Settings = () => {
               </div>
               
               <div className="card text-center">
-                <h4 className="font-semibold text-gray-900 mb-2">Business Plan</h4>
-                <p className="text-2xl font-bold text-gray-900 mb-4">₹999<span className="text-sm font-normal">/month</span></p>
-                <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                <h4 className="font-semibold text-white-900 mb-2">Business Plan</h4>
+                <p className="text-2xl font-bold text-white-900 mb-4">₹999<span className="text-sm font-normal">/month</span></p>
+                <ul className="text-sm text-white-600 space-y-2 mb-4">
                   <li>✓ Everything in Pro</li>
                   <li>✓ Multi-user access</li>
                   <li>✓ Custom categories</li>
@@ -202,7 +171,7 @@ const Settings = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">Settings</h1>
+      <h1 className="text-2xl font-bold text-white-900 mb-8">Settings</h1>
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar */}
@@ -218,7 +187,7 @@ const Settings = () => {
                   className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg w-full transition-colors ${
                     isActive
                       ? 'bg-blue-100 text-blue-700'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      : 'text-white-600 hover:bg-white-100'
                   }`}
                 >
                   <Icon className="mr-3 h-5 w-5" />

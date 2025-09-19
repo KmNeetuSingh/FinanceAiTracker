@@ -76,12 +76,12 @@ const UploadArea = ({ onUploadComplete }) => {
         {isUploading ? (
           <div className="flex flex-col items-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
-            <p className="text-gray-600">Processing your file...</p>
+            <p className="text-white-600">Processing your file...</p>
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <Upload className="h-12 w-12 text-gray-400 mb-4" />
-            <p className="text-lg font-medium text-gray-900 mb-2">
+            <Upload className="h-12 w-12 text-white-400 mb-4" />
+            <p className="text-lg font-medium text-white-900 mb-2">
               {isDragActive ? 'Drop the file here' : 'Drag & drop your bank statement'}
             </p>
             <p className="text-sm text-gray-500">CSV, TXT, or PDF files accepted</p>
