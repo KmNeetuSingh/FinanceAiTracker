@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { 
-  Home, 
-  Upload, 
-  PieChart, 
-  Settings, 
+import {
+  Home,
+  Upload,
+  PieChart,
+  Settings,
   LogOut,
   Menu,
   X
@@ -46,11 +46,10 @@ const Layout = ({ children }) => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                      isActive
-                        ? 'bg-blue-500/10 text-blue-300 ring-1 ring-inset ring-blue-500/20'
-                        : 'text-slate-300 hover:bg-white/5'
-                    }`}
+                    className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive
+                      ? 'bg-blue-500/10 text-blue-300 ring-1 ring-inset ring-blue-500/20'
+                      : 'text-slate-300 hover:bg-white/5'
+                      }`}
                   >
                     <Icon className="mr-3 h-5 w-5" />
                     {item.name}
@@ -80,8 +79,8 @@ const Layout = ({ children }) => {
       {/* Mobile sidebar */}
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 flex z-40">
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)} />
-          <div className="relative flex-1 flex flex-col w-64 bg-white">
+          <div className="fixed inset-0 bg-black bg-opacity-50" onClick={() => setSidebarOpen(false)} />
+          <div className="relative flex-1 flex flex-col w-64 bg-slate-800 text-slate-100">
             <div className="absolute top-0 right-0 -mr-12 pt-2">
               <button
                 className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
@@ -102,11 +101,11 @@ const Layout = ({ children }) => {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                        isActive
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'text-gray-600 hover:bg-gray-100'
-                      }`}
+                      className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive
+                          ? 'bg-blue-500/10 text-blue-300 ring-1 ring-inset ring-blue-500/20'
+                          : 'text-slate-300 hover:bg-white/5'
+                        }`}
+
                       onClick={() => setSidebarOpen(false)}
                     >
                       <Icon className="mr-3 h-5 w-5" />
