@@ -58,15 +58,17 @@ const Layout = ({ children }) => {
               })}
             </nav>
           </div>
+
+          {/* ✅ UPDATED DESKTOP FOOTER */}
           <div className="flex-shrink-0 flex border-t border-slate-700 p-4">
-            <div className="flex items-center w-full">
-              <div className="ml-3">
+            <div className="flex items-center justify-between w-full">
+              <div className="flex flex-col ml-1">
                 <p className="text-sm font-medium text-slate-200">{user?.name}</p>
                 <p className="text-xs font-medium text-slate-400">{user?.email}</p>
               </div>
               <button
                 onClick={handleLogout}
-                className="ml-auto p-2 text-slate-400 hover:text-slate-200"
+                className="ml-3 p-2 text-slate-400 hover:text-slate-200"
                 title="Logout"
               >
                 <LogOut className="h-5 w-5" />
@@ -79,7 +81,10 @@ const Layout = ({ children }) => {
       {/* Mobile sidebar */}
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 flex z-40">
-          <div className="fixed inset-0 bg-black bg-opacity-50" onClick={() => setSidebarOpen(false)} />
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50"
+            onClick={() => setSidebarOpen(false)}
+          />
           <div className="relative flex-1 flex flex-col w-64 bg-slate-800 text-slate-100">
             <div className="absolute top-0 right-0 -mr-12 pt-2">
               <button
@@ -105,7 +110,6 @@ const Layout = ({ children }) => {
                           ? 'bg-blue-500/10 text-blue-300 ring-1 ring-inset ring-blue-500/20'
                           : 'text-slate-300 hover:bg-white/5'
                         }`}
-
                       onClick={() => setSidebarOpen(false)}
                     >
                       <Icon className="mr-3 h-5 w-5" />
@@ -115,15 +119,18 @@ const Layout = ({ children }) => {
                 })}
               </nav>
             </div>
+
+            {/* ✅ UPDATED MOBILE FOOTER */}
             <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-              <div className="flex items-center">
-                <div>
+              <div className="flex items-center justify-between w-full">
+                <div className="flex flex-col">
                   <p className="text-sm font-medium text-gray-700">{user?.name}</p>
                   <p className="text-xs text-gray-500">{user?.email}</p>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="ml-auto p-2 text-gray-400 hover:text-gray-500"
+                  className="ml-3 p-2 text-gray-400 hover:text-gray-500"
+                  title="Logout"
                 >
                   <LogOut className="h-5 w-5" />
                 </button>
