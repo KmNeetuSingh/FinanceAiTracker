@@ -1,6 +1,7 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const pdfParse = require('pdf-parse');
 
 // Ensure uploads directory exists
 const uploadsDir = path.join(__dirname, '../uploads');
@@ -59,13 +60,23 @@ const extractTextFromFile = async (filePath, fileType) => {
           })
           .on('error', reject);
       });
+    } else if (fileType === '.pdf') {
+      const dataBuffer = fs.readFileSync(filePath);
+      const data = await pdfParse(dataBuffer);
+      return data.text;
     } else {
-      // For PDF files, we'll return a simple message as PDF parsing requires additional libraries
-      return "PDF processing requires additional libraries. Please use TXT or CSV files for the basic version.";
+      throw new Error('Unsupported file type');
     }
   } catch (error) {
     throw new Error(`Error reading file: ${error.message}`);
   }
 };
 
-module.exports = { upload, extractTextFromFile };
+const isBankStatement = (text) => {
+  const keywords = ['account', 'balance', 'transaction', 'debit', 'credit', 'bank', 'statement', 'deposit', 'withdrawal', 'cheque', 'atm', 'transfer', 'salary', 'bill', 'payment', 'interest', 'fee', 'opening balance', 'closing balance', 'account number'];
+  const lowerText = text.toLowerCase();
+  const matches = keywords.filter(keyword => lowerText.includes(keyword));
+  return matches.length >= 5;
+};
+
+module.exports = { upload, extractTextFromFile, isBankStatement };

@@ -153,4 +153,29 @@ router.get('/dashboard/summary', auth, async (req, res) => {
   }
 });
 
+// Download transactions as CSV
+router.get('/download', auth, async (req, res) => {
+  try {
+    const transactions = await Transaction.find({ userId: req.user._id }).sort({ date: -1 });
+    
+    if (transactions.length === 0) {
+      return res.status(404).json({ error: 'No transactions found' });
+    }
+    
+    // Format as CSV
+    const csvHeader = 'Date,Description,Amount,Type,Category,Merchant\n';
+    const csvRows = transactions.map(t => 
+      `${t.date},"${t.description.replace(/"/g, '""')}",${t.amount},${t.type},${t.category},"${t.merchant.replace(/"/g, '""')}"`
+    ).join('\n');
+    const csvContent = csvHeader + csvRows;
+    
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename="bank_statement_report.csv"');
+    res.send(csvContent);
+  } catch (error) {
+    console.error('Download error:', error);
+    res.status(500).json({ error: 'Error generating report' });
+  }
+});
+
 module.exports = router;

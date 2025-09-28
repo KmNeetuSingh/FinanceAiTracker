@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const User = require('../model/User');
 
+
 // Get user profile
 router.get('/profile', auth, async (req, res) => {
   try {
@@ -50,5 +51,7 @@ router.put('/profile', auth, async (req, res) => {
     res.status(500).json({ error: 'Error updating profile' });
   }
 });
+
+
 
 module.exports = router;

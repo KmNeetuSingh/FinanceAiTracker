@@ -170,12 +170,30 @@ async function parseStatementWithAI(textContent) {
 
     const content = response.choices[0].message.content;
 
-    // Parse the JSON response
+    // Parse the JSON response, handling potential extra text
     let parsedResponse;
     try {
-      parsedResponse = JSON.parse(content);
+      let jsonString = content.trim();
+
+      // Remove markdown code blocks if present
+      if (jsonString.startsWith('```json')) {
+        jsonString = jsonString.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+      } else if (jsonString.startsWith('```')) {
+        jsonString = jsonString.replace(/^```\s*/, '').replace(/\s*```$/, '');
+      }
+
+      // Find JSON object/array boundaries
+      const startIndex = jsonString.indexOf('{') !== -1 ? jsonString.indexOf('{') : jsonString.indexOf('[');
+      const endIndex = jsonString.lastIndexOf('}') !== -1 ? jsonString.lastIndexOf('}') : jsonString.lastIndexOf(']');
+
+      if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
+        jsonString = jsonString.substring(startIndex, endIndex + 1);
+      }
+
+      parsedResponse = JSON.parse(jsonString);
     } catch (parseError) {
       console.error("JSON parse error:", parseError);
+      console.error("Raw content:", content.substring(0, 500) + "...");
       throw new Error("Invalid JSON response from AI");
     }
 

@@ -6,7 +6,7 @@ import { transactionsAPI } from '../services/api'; // ✅ fixed import
 
 const UploadArea = ({ onUploadComplete }) => {
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState(null);
+  // const [uploadStatus, setUploadStatus] = useState(null); // Removed
   const navigate = useNavigate();
 
   const onDrop = useCallback(async (acceptedFiles) => {
@@ -14,39 +14,41 @@ const UploadArea = ({ onUploadComplete }) => {
 
     const file = acceptedFiles[0];
     setIsUploading(true);
-    setUploadStatus(null);
+    // setUploadStatus(null); // Removed
 
     const formData = new FormData();
     formData.append('statement', file);
 
     try {
       const response = await transactionsAPI.uploadStatement(formData);
-      setUploadStatus({ type: 'success', message: response?.message || 'File uploaded and processed successfully!' });
+      // setUploadStatus({ type: 'success', message: response?.message || 'File uploaded and processed successfully!' }); // Removed
       if (onUploadComplete) {
-        const transactions = Array.isArray(response?.transactions) ? response.transactions : [];
-        const totalTransactions = transactions.length;
-        const totals = transactions.reduce((acc, t) => {
-          const amount = Number(t.amount) || 0;
-          if (amount > 0) acc.totalIncome += amount;
-          if (amount < 0) acc.totalExpenses += Math.abs(amount);
-          return acc;
-        }, { totalIncome: 0, totalExpenses: 0 });
+        // Pass the entire response object
         onUploadComplete({
           success: true,
           message: response?.message || 'Upload successful',
           data: {
-            totalTransactions,
-            totalIncome: totals.totalIncome,
-            totalExpenses: totals.totalExpenses,
-            transactions,
+            totalTransactions: response.transactions.length,
+            totalIncome: response.financeSummary.totalIncome,
+            totalExpenses: response.financeSummary.totalExpense,
+            transactions: response.transactions,
           },
+          financeSummary: response.financeSummary, // Pass the finance summary
         });
       }
       // Redirect to dashboard after brief success toast
-      setTimeout(() => navigate('/dashboard'), 800);
+      // setTimeout(() => navigate('/dashboard'), 800); // Removed redirection
     } catch (error) {
       const message = error.response?.data?.error || error.response?.data?.message || 'Upload failed. Please try again.';
-      setUploadStatus({ type: 'error', message });
+      // setUploadStatus({ type: 'error', message }); // Removed
+      if (onUploadComplete) {
+        onUploadComplete({
+          success: false,
+          message: message,
+          data: null,
+          financeSummary: null,
+        });
+      }
     } finally {
       setIsUploading(false);
     }
@@ -90,28 +92,7 @@ const UploadArea = ({ onUploadComplete }) => {
         )}
       </div>
 
-      {uploadStatus && (
-        <div
-          className={`p-4 rounded-lg flex items-start ${
-            uploadStatus.type === 'success'
-              ? 'bg-green-50 border border-green-200'
-              : 'bg-red-50 border border-red-200'
-          }`}
-        >
-          {uploadStatus.type === 'success' ? (
-            <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 mr-3" />
-          ) : (
-            <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-3" />
-          )}
-          <p
-            className={
-              uploadStatus.type === 'success' ? 'text-green-800' : 'text-red-800'
-            }
-          >
-            {uploadStatus.message}
-          </p>
-        </div>
-      )}
+      {/* Removed uploadStatus and its related JSX */}
 
       <div className="bg-gray-50 rounded-lg p-4">
         <h4 className="font-medium text-gray-900 mb-2 flex items-center">

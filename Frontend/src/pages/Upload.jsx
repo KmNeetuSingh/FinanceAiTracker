@@ -1,17 +1,30 @@
 import { useState } from 'react';
 import UploadArea from '../components/UploadArea';
 import { AlertCircle, CheckCircle, FileText, RefreshCw } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Upload = () => {
   const [uploadResult, setUploadResult] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [aiFinanceMessage, setAiFinanceMessage] = useState(null);
+  const navigate = useNavigate();
 
   const handleUploadComplete = (result) => {
     setUploadResult(result);
+    if (result.success && result.financeSummary?.message) {
+      setAiFinanceMessage(result.financeSummary.message);
+      setTimeout(() => {
+        setAiFinanceMessage(null);
+      }, 25000); // Vanish after 2 minutes
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 25000); // Redirect to dashboard after 2 minutes
+    }
   };
 
   const handleProcessNew = () => {
     setUploadResult(null);
+    setAiFinanceMessage(null); // Clear AI message when processing new file
   };
 
   return (
@@ -45,7 +58,14 @@ const Upload = () => {
         </div>
       ) : (
         <div className="max-w-4xl mx-auto">
-          <div className={`p-4 rounded-lg mb-6 flex items-center ${
+          {aiFinanceMessage && (
+            <div className="bg-blue-50 border border-blue-200 text-blue-800 p-4 rounded-lg mb-6 flex items-center">
+              <CheckCircle className="h-5 w-5 text-blue-500 mr-3" />
+              <span>{aiFinanceMessage}</span>
+            </div>
+          )}
+          {/* Removed uploadResult.message display as it's replaced by aiFinanceMessage */}
+          {/* <div className={`p-4 rounded-lg mb-6 flex items-center ${
             uploadResult.success 
               ? 'bg-green-50 border border-green-200' 
               : 'bg-red-50 border border-red-200'
@@ -60,7 +80,7 @@ const Upload = () => {
             }>
               {uploadResult.message}
             </span>
-          </div>
+          </div> */}
 
           {uploadResult.data && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

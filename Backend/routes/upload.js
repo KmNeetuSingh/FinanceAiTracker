@@ -3,8 +3,9 @@ const fs = require('fs').promises;
 const path = require('path');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const { upload, extractTextFromFile } = require('../utils/fileUpload');
+const { upload, extractTextFromFile, isBankStatement } = require('../utils/fileUpload');
 const { parseStatementWithAI } = require('../utils/aiParser');
+const { getFinanceSummary } = require('../utils/aiService');
 const Transaction = require('../model/Transaction');
 
 // Upload and process bank statement
@@ -24,12 +25,23 @@ router.post('/', auth, upload.single('statement'), async (req, res) => {
       return res.status(400).json({ error: `Error reading file: ${error.message}` });
     }
 
+    // Validate if PDF is a bank statement
+    if (fileExt === '.pdf' && !isBankStatement(textContent)) {
+      // Clean up uploaded file
+      try {
+        await fs.unlink(req.file.path);
+      } catch (unlinkError) {
+        console.error('Error deleting file:', unlinkError);
+      }
+      return res.status(400).json({ error: 'The uploaded PDF does not appear to be a valid bank statement. Please upload a bank statement PDF.' });
+    }
+
     // Process with AI
     let transactions;
     try {
       transactions = await parseStatementWithAI(textContent);
     } catch (error) {
-      return res.status(500).json({ error: `AI processing failed: ${error.message}` });
+      return res.status(400).json({ error: 'The uploaded file could not be processed. Please ensure it is a valid bank statement in PDF, CSV, or TXT format and try again.' });
     }
 
     // Save transactions to database
@@ -43,11 +55,17 @@ router.post('/', auth, upload.single('statement'), async (req, res) => {
 
     const savedTransactions = await Promise.all(transactionPromises);
 
+    const financeSummary = await getFinanceSummary(savedTransactions);
+
     res.json({
       success: true,
       message: `Processed ${savedTransactions.length} transactions successfully`,
-      transactions: savedTransactions
+      transactions: savedTransactions,
+      financeSummary
     });
+
+    // Send finance update email asynchronously
+    // sendFinanceUpdateEmail(transactions, req.user);
 
   } catch (error) {
     console.error('Upload error:', error);
