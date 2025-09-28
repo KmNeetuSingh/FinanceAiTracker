@@ -5,11 +5,8 @@ A Full-Stack FinTech application that integrates AI (OpenAI gpt-4o-mini) to help
 ## Live Demo
 
 https://github.com/user-attachments/assets/936eb0c3-77ed-4ab0-b0de-2bfa7e46b9e2
-
-![Finance AI Tracker Application Architecture](./Frontend/public/Finance AI Tracker Application Architecture.svg)
-
-This document outlines the architecture and data flow of the Finance AI Tracker application, which consists of a React-based frontend and a Node.js/Express backend.
-Got it 🚀 — here’s a **concise version** of your Finance AI Tracker docs:
+## WorkFlow Architecture
+<img src="https://github.com/user-attachments/assets/5e7be1a5-6030-427a-b7e1-c4905e0f1c4d" width="1500" height="3000">
 
 ## 1. Frontend
 
