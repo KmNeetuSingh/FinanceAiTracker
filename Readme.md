@@ -1,4 +1,4 @@
-# Finance AI Tracker - Technical Documentation
+# Finance AI Tracker
 
 Finance AI Tracker is a full-stack FinTech application that leverages AI to help users manage their finances by uploading bank statements, getting automated insights, and tracking their financial health.
 
