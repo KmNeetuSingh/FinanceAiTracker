@@ -615,31 +615,12 @@ Backend (.env):
 - AI API Cost: Approximately 2 INR per user per month
 
 ---
-
 ## Future Enhancements
-
 - Budget goal tracking with notifications
-- Multi-currency support (USD, EUR, GBP)
 - Bill payment reminders
 - Investment portfolio tracking
-- Mobile application (React Native)
 - Email and SMS notifications
 - Recurring transaction auto-detection
 - Advanced machine learning spending predictions
-- Direct bank API integration
 - Multi-language support
-
----
-
-## Technology Documentation References
-
-- React: https://react.dev
-- Express.js: https://expressjs.com
-- MongoDB: https://docs.mongodb.com
-- OpenAI API: https://platform.openai.com/docs
-- JWT: https://jwt.io
-- Tailwind CSS: https://tailwindcss.com
-
----
-
 **Built with React, Node.js, MongoDB and OpenAI**
