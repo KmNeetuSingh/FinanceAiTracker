@@ -8,13 +8,17 @@ import TransactionsTable from "../components/TransactionsTable";
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [transactions, setTransactions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalTransactions, setTotalTransactions] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(""); // Track errors
   const location = useLocation();
+  const limit = 10;
 
   useEffect(() => {
     initDashboard();
-  }, [location.state?.refresh]);
+  }, [location.state?.refresh, currentPage]);
 
   const initDashboard = async () => {
     const token = localStorage.getItem("token");
@@ -31,7 +35,7 @@ const Dashboard = () => {
   
       const [summaryResponse, transactionsResponse] = await Promise.all([
         transactionsAPI.getDashboardSummary(),
-        transactionsAPI.getAll(),
+        transactionsAPI.getAll({ page: currentPage, limit }),
       ]);
 
       setDashboardData(summaryResponse); // direct data from backend
@@ -39,12 +43,18 @@ const Dashboard = () => {
         ? transactionsResponse
         : transactionsResponse?.transactions || [];
       setTransactions(txns);
+      setTotalPages(transactionsResponse.pagination?.pages || 1);
+      setTotalTransactions(transactionsResponse.pagination?.total || 0);
     } catch (err) {
       console.error("Error fetching dashboard data:", err.response?.data || err.message);
       setError("Failed to load dashboard. Make sure the backend is running.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   const handleDelete = async (transactionId) => {

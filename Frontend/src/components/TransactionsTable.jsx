@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Edit3, Trash2, Filter, Search } from 'lucide-react';
 
-const TransactionsTable = ({ transactions, onEdit, onDelete }) => {
+const TransactionsTable = ({ transactions, onEdit, onDelete, currentPage, totalPages, totalTransactions, limit, onPageChange }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
@@ -145,6 +145,68 @@ const TransactionsTable = ({ transactions, onEdit, onDelete }) => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between border-t border-gray-600 px-4 py-3 mt-4 bg-gray-800">
+          <div className="flex-1 flex justify-between sm:hidden">
+            <button
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="relative inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600 disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <button
+              onClick={() => onPageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+          <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm text-white-500">
+                Showing <span className="font-medium">{(currentPage - 1) * limit + 1}</span> to{' '}
+                <span className="font-medium">{Math.min(currentPage * limit, totalTransactions)}</span> of{' '}
+                <span className="font-medium">{totalTransactions}</span> results
+              </p>
+            </div>
+            <div>
+              <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                <button
+                  onClick={() => onPageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-600 bg-gray-700 text-sm font-medium text-white-500 hover:bg-gray-600 disabled:opacity-50"
+                >
+                  <span>Previous</span>
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => onPageChange(page)}
+                    className={`relative inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium ${
+                      page === currentPage
+                        ? 'z-10 bg-blue-600 border-blue-500 text-white'
+                        : 'bg-gray-700 text-white hover:bg-gray-600'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+                <button
+                  onClick={() => onPageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-600 bg-gray-700 text-sm font-medium text-white-500 hover:bg-gray-600 disabled:opacity-50"
+                >
+                  <span>Next</span>
+                </button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* No match */}
       {filteredTransactions.length === 0 && (
