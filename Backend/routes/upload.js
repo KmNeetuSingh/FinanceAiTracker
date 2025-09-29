@@ -55,6 +55,8 @@ router.post('/', auth, upload.single('statement'), async (req, res) => {
 
     const savedTransactions = await Promise.all(transactionPromises);
 
+    console.log(`User ID: ${req.user._id}, Saved ${savedTransactions.length} transactions:`, savedTransactions.map(t => ({ _id: t._id, description: t.description })));
+
     const financeSummary = await getFinanceSummary(savedTransactions);
 
     res.json({

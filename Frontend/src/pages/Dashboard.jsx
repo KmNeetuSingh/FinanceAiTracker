@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     initDashboard();
-  }, [location.pathname]);
+  }, [location.state?.refresh]);
 
   const initDashboard = async () => {
     const token = localStorage.getItem("token");

@@ -17,7 +17,7 @@ const Upload = () => {
         setAiFinanceMessage(null);
       }, 10000); // Vanish after 2 minutes
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/dashboard', { state: { refresh: Date.now() } });
       }, 10000); // Redirect to dashboard after 2 minutes
     }
   };
