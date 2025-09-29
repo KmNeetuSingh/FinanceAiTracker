@@ -12,17 +12,17 @@ const Dashboard = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalTransactions, setTotalTransactions] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(""); // Track errors
+  const [error, setError] = useState("");
   const location = useLocation();
   const limit = 10;
 
   useEffect(() => {
     initDashboard();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.state?.refresh, currentPage]);
 
   const initDashboard = async () => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       setError("You must be logged in to view the dashboard.");
       setLoading(false);
@@ -31,14 +31,12 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
-
-  
       const [summaryResponse, transactionsResponse] = await Promise.all([
         transactionsAPI.getDashboardSummary(),
         transactionsAPI.getAll({ page: currentPage, limit }),
       ]);
 
-      setDashboardData(summaryResponse); // direct data from backend
+      setDashboardData(summaryResponse);
       const txns = Array.isArray(transactionsResponse)
         ? transactionsResponse
         : transactionsResponse?.transactions || [];
@@ -54,20 +52,25 @@ const Dashboard = () => {
   };
 
   const handlePageChange = (page) => {
+    if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
+  };
+
+  const refreshSummary = async () => {
+    try {
+      const summaryResponse = await transactionsAPI.getDashboardSummary();
+      setDashboardData(summaryResponse);
+    } catch (_) {}
   };
 
   const handleDelete = async (transactionId) => {
     const confirmed = window.confirm('Delete this transaction?');
     if (!confirmed) return;
+
     try {
       await transactionsAPI.delete(transactionId);
-      setTransactions((prev) => prev.filter((t) => t._id !== transactionId));
-      // Optionally refresh summary
-      try {
-        const summaryResponse = await transactionsAPI.getDashboardSummary();
-        setDashboardData(summaryResponse);
-      } catch (_) {}
+      setTransactions(prev => prev.filter(t => t._id !== transactionId));
+      refreshSummary();
     } catch (err) {
       alert(err.response?.data?.error || 'Failed to delete transaction');
     }
@@ -77,6 +80,7 @@ const Dashboard = () => {
     try {
       const description = window.prompt('Description', transaction.description);
       if (description === null) return;
+
       const amountInput = window.prompt('Amount (use negative for expense)', String(transaction.amount));
       if (amountInput === null) return;
       const amount = Number(amountInput);
@@ -84,21 +88,21 @@ const Dashboard = () => {
         alert('Amount must be a number');
         return;
       }
+
       const category = window.prompt('Category', transaction.category || 'other');
       if (category === null) return;
+
       const date = window.prompt('Date (YYYY-MM-DD)', new Date(transaction.date).toISOString().slice(0,10));
       if (date === null) return;
-      const type = amount >= 0 ? 'income' : 'expense';
 
+      const type = amount >= 0 ? 'income' : 'expense';
       const updates = { description, amount, category, date, type };
+
       const updated = await transactionsAPI.update(transaction._id, updates);
       const updatedTx = updated?.transaction || { ...transaction, ...updates };
-      setTransactions((prev) => prev.map((t) => (t._id === transaction._id ? updatedTx : t)));
-      // Optionally refresh summary
-      try {
-        const summaryResponse = await transactionsAPI.getDashboardSummary();
-        setDashboardData(summaryResponse);
-      } catch (_) {}
+
+      setTransactions(prev => prev.map(t => (t._id === transaction._id ? updatedTx : t)));
+      refreshSummary();
     } catch (err) {
       alert(err.response?.data?.error || 'Failed to update transaction');
     }
@@ -130,33 +134,23 @@ const Dashboard = () => {
             <div className="card">
               <h3 className="text-lg font-semibold text-white-900 mb-4">Recent Transactions</h3>
               <div className="space-y-4">
-                {transactions.slice(0, 5).map((transaction) => (
-                  <div
-                    key={transaction._id}
-                    className="flex items-center justify-between py-2 border-b border-white-100 last:border-b-0"
-                  >
+                {transactions.slice(0, 5).map(transaction => (
+                  <div key={transaction._id} className="flex items-center justify-between py-2 border-b border-white-100 last:border-b-0">
                     <div>
                       <p className="font-medium text-white-900">{transaction.description}</p>
                       <p className="text-sm text-white-500">
                         {new Date(transaction.date).toLocaleDateString()} •{" "}
-                        <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ml-2 ${
-                            transaction.type === "income"
-                              ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
-                          }`}
-                        >
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ml-2 ${
+                          transaction.type === "income"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}>
                           {transaction.category}
                         </span>
                       </p>
                     </div>
-                    <span
-                      className={`font-medium ${
-                        transaction.type === "income" ? "text-green-600" : "text-red-600"
-                      }`}
-                    >
-                      {transaction.type === "income" ? "+" : "-"}₹
-                      {Math.abs(transaction.amount).toLocaleString()}
+                    <span className={`font-medium ${transaction.type === "income" ? "text-green-600" : "text-red-600"}`}>
+                      {transaction.type === "income" ? "+" : "-"}₹{Math.abs(transaction.amount).toLocaleString()}
                     </span>
                   </div>
                 ))}
@@ -166,7 +160,16 @@ const Dashboard = () => {
         </>
       )}
 
-      <TransactionsTable transactions={transactions} onEdit={handleEdit} onDelete={handleDelete} />
+      <TransactionsTable
+        transactions={transactions}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalTransactions={totalTransactions}
+        limit={limit}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
