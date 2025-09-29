@@ -603,18 +603,7 @@ Backend (.env):
 8. **Real-time Updates**
    - Instant UI refresh after operations
    - No page reload required for updates
-
----
-
-## Performance Metrics
-
-- Statement Processing Time: 5-10 seconds
-- Dashboard Load Time: Less than 1 second
-- API Response Time: Less than 200 milliseconds
-- Database Query Time: Less than 100 milliseconds
-- AI API Cost: Approximately 2 INR per user per month
-
----
+   
 ## Future Enhancements
 - Budget goal tracking with notifications
 - Bill payment reminders
