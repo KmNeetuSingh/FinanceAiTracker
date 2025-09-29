@@ -88,6 +88,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     dispatch({ type: 'LOGOUT' });
+    navigate('/'); 
   };
 
   const clearError = () => {
