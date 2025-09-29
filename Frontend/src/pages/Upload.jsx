@@ -15,10 +15,10 @@ const Upload = () => {
       setAiFinanceMessage(result.financeSummary.message);
       setTimeout(() => {
         setAiFinanceMessage(null);
-      }, 25000); // Vanish after 2 minutes
+      }, 10000); // Vanish after 2 minutes
       setTimeout(() => {
         navigate('/dashboard');
-      }, 25000); // Redirect to dashboard after 2 minutes
+      }, 10000); // Redirect to dashboard after 2 minutes
     }
   };
 
