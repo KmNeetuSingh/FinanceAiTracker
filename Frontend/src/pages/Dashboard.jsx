@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { transactionsAPI } from "../services/api";
 import SummaryCards from "../components/Dashboard/SummaryCard";
 import ExpenseChart from "../components/Dashboard/ExpensesChart";
@@ -9,10 +10,11 @@ const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(""); // Track errors
+  const location = useLocation();
 
   useEffect(() => {
     initDashboard();
-  }, []);
+  }, [location.pathname]);
 
   const initDashboard = async () => {
     const token = localStorage.getItem("token");
