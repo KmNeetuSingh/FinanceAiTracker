@@ -13,12 +13,8 @@ const Upload = () => {
     setUploadResult(result);
     if (result.success && result.financeSummary?.message) {
       setAiFinanceMessage(result.financeSummary.message);
-      setTimeout(() => {
-        setAiFinanceMessage(null);
-      }, 10000); // Vanish after 2 minutes
-      setTimeout(() => {
-        navigate('/dashboard', { state: { refresh: Date.now() } });
-      }, 10000); // Redirect to dashboard after 2 minutes
+      // Redirect immediately to dashboard to update transactions
+      navigate('/dashboard', { state: { refresh: Date.now() } });
     }
   };
 
