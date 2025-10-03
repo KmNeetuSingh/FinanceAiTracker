@@ -8,19 +8,7 @@ const connectDB = require("./config/db");
 connectDB();
 
 const app = express();
-
-// Middleware
-app.use(cors({
-  origin: "https://finance-ai-tracker-rs62.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"] 
-}));
-
-// Handle preflight requests
-app.options("/*", cors());
-
-
+app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
